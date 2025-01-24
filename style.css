@@ -1,0 +1,288 @@
+*,
+html{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    height: 100vh;
+}
+
+.login-container{
+    background-color: rgb(155, 228, 221);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#login-btn {
+    background: linear-gradient(to bottom, #43bdaf, #2c8c89); /* Subtle gradient */
+    border: 1px solid #d1d1d6; /* Light gray border */
+    border-radius: 12px; /* Smooth, rounded edges */
+    color: #000; /* Black text for high contrast */
+    font-size: 16px; /* Modern font size */
+    font-weight: 500; /* Medium font weight for emphasis */
+    padding: 6px 12px; /* Spacious padding for touch-friendly size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: center; /* Center-align text */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+}
+
+#login-btn:hover {
+    background: linear-gradient(to bottom, #329b97, #328966); /* Slightly darker on hover */
+    border-color: #2076b4; /* Slightly darker border on hover */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15); /* Enhance shadow for hover */
+}
+
+#login-btn:active {
+    background: linear-gradient(to bottom, #1f595e, #125945); /* Darker gradient on press */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduced shadow for pressed effect */
+    transform: translateY(1px); /* Slight movement for realism */
+}
+
+#login-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.4); /* Add blue focus ring */
+}
+
+.navbar-container {
+    background-color:  rgb(13, 158, 153);
+    width: 100%;
+    height: 10vh;
+}
+
+.ul-navbar{
+    background-color: rgb(13, 158, 153);
+    display: flex;
+}
+
+.li-navbar {
+    list-style-type: none;
+    padding : 10px;
+    margin : 5px;
+    color: white;
+}
+
+.li-navbar:hover {
+    background-color: black;
+    transition: .2s ease-in-out;
+    transition-delay: .05s;
+}
+
+.li-sign-navbar {
+    display: none;
+    list-style-type: none;
+    padding : 10px;
+    margin : 5px;
+    color: white;
+}
+
+.li-sign-navbar:hover {
+    background-color: black;
+    transition: .2s ease-in-out;
+    transition-delay: .05s;
+}
+
+.a-navbar{
+    text-decoration: none;
+    color: white;
+}
+
+.content-container{
+    background-color: rgb(155, 228, 221);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+
+#file-form {
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    gap: 15px; /* Add spacing between elements */
+    width: 100%; /* Adjust width if needed */
+    max-width: 400px; /* Optional: Restrict maximum width */
+}
+
+#inputFileSign-btn {
+    background: linear-gradient(to bottom, #ffffff, #f0f0f5); /* Subtle gradient */
+    border: 1px solid #d1d1d6; /* Light gray border */
+    border-radius: 12px; /* Smooth, rounded edges */
+    color: #000; /* Black text for high contrast */
+    font-size: 16px; /* Modern font size */
+    font-weight: 500; /* Medium font weight for emphasis */
+    padding: 6px 12px; /* Spacious padding for touch-friendly size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: center; /* Center-align text */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+}
+
+#inputFileSign-btn:hover {
+    background: linear-gradient(to bottom, #f8f8f8, #e9e9ef); /* Slightly darker on hover */
+    border-color: #2076b4; /* Slightly darker border on hover */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15); /* Enhance shadow for hover */
+}
+
+#inputFileSign-btn:active {
+    background: linear-gradient(to bottom, #e0e0e5, #d8d8dd); /* Darker gradient on press */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduced shadow for pressed effect */
+    transform: translateY(1px); /* Slight movement for realism */
+}
+
+#inputFileSign-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.4); /* Add blue focus ring */
+}
+
+#processSign-btn {
+    background: linear-gradient(to bottom, #ffffff, #f0f0f5); /* Subtle gradient */
+    border: 1px solid #d1d1d6; /* Light gray border */
+    border-radius: 12px; /* Smooth, rounded edges */
+    color: #000; /* Black text for high contrast */
+    font-size: 16px; /* Modern font size */
+    font-weight: 500; /* Medium font weight for emphasis */
+    padding: 6px 12px; /* Spacious padding for touch-friendly size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: center; /* Center-align text */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+}
+
+#processSign-btn:hover {
+    background: linear-gradient(to bottom, #f8f8f8, #e9e9ef); /* Slightly darker on hover */
+    border-color: #2076b4; /* Slightly darker border on hover */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15); /* Enhance shadow for hover */
+}
+
+#processSign-btn:active {
+    background: linear-gradient(to bottom, #e0e0e5, #d8d8dd); /* Darker gradient on press */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduced shadow for pressed effect */
+    transform: translateY(1px); /* Slight movement for realism */
+}
+
+#processSign-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.4); /* Add blue focus ring */
+}
+
+#file-form-val{
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    width: 100%; /* Adjust width if needed */
+    max-width: 400px; /* Optional: Restrict maximum width */
+}
+
+
+#processValidation-btn {
+    background: linear-gradient(to bottom, #ffffff, #f0f0f5); /* Subtle gradient */
+    border: 1px solid #d1d1d6; /* Light gray border */
+    border-radius: 12px; /* Smooth, rounded edges */
+    color: #000; /* Black text for high contrast */
+    font-size: 16px; /* Modern font size */
+    font-weight: 500; /* Medium font weight for emphasis */
+    padding: 6px 12px; /* Spacious padding for touch-friendly size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: center; /* Center-align text */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+}
+
+#processValidation-btn:hover {
+    background: linear-gradient(to bottom, #f8f8f8, #e9e9ef); /* Slightly darker on hover */
+    border-color: #2076b4; /* Slightly darker border on hover */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15); /* Enhance shadow for hover */
+}
+
+#processValidation-btn:active {
+    background: linear-gradient(to bottom, #e0e0e5, #d8d8dd); /* Darker gradient on press */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduced shadow for pressed effect */
+    transform: translateY(1px); /* Slight movement for realism */
+}
+
+#processValidation-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.4); /* Add blue focus ring */
+}
+
+h1 {
+    text-align: center; /* Center-align the title */
+    margin-bottom: 20px; /* Add spacing below the title */
+}
+
+.footer-container{
+    background-color: rgb(13, 158, 153);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+
+.p-footer{
+    font-size: 20px;
+    color: beige;
+
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    width: 40%;
+    height: 20%;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255); 
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    text-align: center; /* Center text inside elements */
+    height: 100%;
+}
+
+#closeModal{
+    background: linear-gradient(to bottom, #ffffff, #f0f0f5); /* Subtle gradient */
+    border: 1px solid #d1d1d6; /* Light gray border */
+    border-radius: 12px; /* Smooth, rounded edges */
+    color: #000; /* Black text for high contrast */
+    font-size: 16px; /* Modern font size */
+    font-weight: 500; /* Medium font weight for emphasis */
+    padding: 6px 12px; /* Spacious padding for touch-friendly size */
+    margin-top: 20px;
+    cursor: pointer; /* Pointer cursor for interactivity */
+    text-align: center; /* Center-align text */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+}
+
+#closeModal:hover {
+    background: linear-gradient(to bottom, #f8f8f8, #e9e9ef); /* Slightly darker on hover */
+    border-color: #2076b4; /* Slightly darker border on hover */
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15); /* Enhance shadow for hover */
+}
+
+#closeModal:active {
+    background: linear-gradient(to bottom, #e0e0e5, #d8d8dd); /* Darker gradient on press */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Reduced shadow for pressed effect */
+    transform: translateY(1px); /* Slight movement for realism */
+}
+
+#closeModal:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.4); /* Add blue focus ring */
+}

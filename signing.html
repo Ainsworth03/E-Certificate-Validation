@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>e-certificate validation</title>
+        <link rel = "stylesheet" href="style.css" />
+    </head>
+    <body id = "signing-page">
+        <div class="body-container"></div>
+            <!-- NAVIGATION BAR -->
+            <div class = "navbar-container">
+                <ul class = "ul-navbar">
+                    <li class = li-navbar>
+                        <a class = "a-navbar" href = "home.html">Home</a>
+                    </li>
+                    <li id="li-sign-navbar" class = li-sign-navbar>
+                        <a class = "a-navbar" href = "signing.html">Signing</a>
+                    </li>
+                    <li class = li-navbar>
+                        <a class = "a-navbar" href = "Validation.html">Validation</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- NAVIGATION BAR END -->
+
+            <!-- WEB3 CONNECTIVITY -->
+            <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+            <script>
+                // Initialize Web3
+                const web3 = new Web3('http://localhost:7545'); // Ganache RPC
+                console.log('Web3 initialized:', web3);
+            </script>
+            <!-- WEB3 CONNECTIVITY END-->
+
+            <!-- CONTENT 1 -->
+            <div class = "content-container">
+                <h1>E-Certificate Validation</h1>
+                <form id="file-form">
+                    <label for="file-input">Upload E-Certificate (PDF):</label>
+                    <input type="file" id="file-input-sign" accept=".pdf" required hidden/>
+                    <span id="file-name">No file chosen</span>
+                    <button type="button" id="inputFileSign-btn">Choose File</button>
+                    <button type="button" id="processSign-btn">Signing</button>
+                    <p id="public-key"></p>
+                    <p id="sign-result">Sign result will appear here.</p>
+                </form>
+                <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"></script>
+                <script src="./ECDSA.js"></script>
+                <script src="./HashSHA3.js"></script>
+                <script src="./main.js"></script>
+            </div>
+            <!-- CONTENT 1 END -->
+            
+            <!-- FOOTER -->
+            <div class = "footer-container">
+                <p class = "p footer">Copyright 2024 by Febrian Nashrullah</p>
+            </div>
+            <!-- FOOTER END -->
+
+            <!-- Modal -->
+            <div id="warningModal" class="modal">
+                <div class="modal-content">
+                    <h2>No File Choosen!</h2>
+                    <p>File Reading Error: Mohon masukkan file e-certificate dalam format .pdf.</p>
+                    <button id="closeModal">OK</button>
+                </div>
+            </div>
+            <!-- Modal END -->
+
+        </div>
+    </body>
+</html>

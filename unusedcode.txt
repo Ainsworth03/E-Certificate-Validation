@@ -1,0 +1,28 @@
+From
+filename: index.html
+for: navbar on upper screen    
+reason: index.html should only redirect into login page         
+               
+                <ul class = "ul-navbar">
+                    <li class = li-navbar>
+                        <a class = "a-navbar" href = "#">Home</a>
+                    </li>
+                    <li class = li-navbar>
+                        <a class = "a-navbar" href = "signing.html">Signing</a>
+                    </li>
+                    <li class = li-navbar>
+                        <a class = "a-navbar" href = "Validation.html">Validation</a>
+                    </li>
+                </ul>
+
+From
+filename: Validation.html
+for: Enable sign input from user (num1, num2)
+reason: The sign will be retrieved from Blockchain
+<br> 
+                    <label for="firstSign">Enter the first sign:</label> 
+                    <input type="number" id="firstSign" name="firstNumber" required> 
+                    <br><br> 
+                    <label for="secondSign">Enter the second sign:</label> 
+                    <input type="number" id="secondSign" name="secondNumber" required> 
+                    <br><br> 
