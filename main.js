@@ -331,38 +331,44 @@ if (pageId == "validation-page"){
         const fileContent = await fileToArrayBuffer(fileInput.files[0])
         const hash = await findHash(fileContent)
 
-        //Call retrieve e-certificate on smart contract
-        const sign = await contract.methods.retrieveCertificate('0x' + hash).call()
-        const { 0: firstSign, 1: secondSign, 2: timeStamp } = sign
-        console.log(`firstsign ${firstSign}, secondSign: ${secondSign}, timeStamp ${new Date(Number(timeStamp) * 1000).toLocaleString()}, type: ${typeof sign}`)
+        // Retirieve e-certificate
+        try{
+            //Call retrieve e-certificate on smart contract
+            const sign = await contract.methods
+                                        .retrieveCertificate('0x' + hash)
+                                        .call()
+            const { 0: firstSign, 1: secondSign, 2: timeStamp } = sign
+            const timeStampConvrtd = new Date(Number(timeStamp) * 1000).toLocaleString()
+            console.log(`firstsign ${firstSign}, secondSign: ${secondSign}, timeStamp ${timeStampConvrtd}, type: ${typeof sign}`)
 
-        //signInput = signInput.map(input => BigInt(input.value, 10))
-        pubKeyInput = pubKeyInput.map(input => BigInt(input.value, 10))
-        signInput = [firstSign, secondSign]
+            //signInput = signInput.map(input => BigInt(input.value, 10))
+            pubKeyInput = pubKeyInput.map(input => BigInt(input.value, 10))
+            signInput = [firstSign, secondSign]
 
-        const verifyingResult = messageVeryfying(hash, signInput, pubKeyInput)
+            const verifyingResult = messageVeryfying(hash, signInput, pubKeyInput)
+            if (verifyingResult) {
 
-        console.log(`e-certificate hash ${hash}\nVerifying result: ${verifyingResult}`)
+                console.log(`e-certificate hash ${hash}\nVerifying result: ${verifyingResult}`)
 
-        valResultDisplay.textContent = verifyingResult
+                valResultDisplay.textContent = `Certificate Valid!
+                First Sign: ${firstSign}
+                Second Sign: ${secondSign}
+                Time Added: ${timeStampConvrtd}`
 
-        try {
-            const { firstSign, secondSign, timeStamp } = await contract.methods
-                .retrieveCertificate('0x' + hash)
-                .call();
+            } else {
+                valResultDisplay.textContent = "Validation failed: The sign doesn't match public key provided!"
 
-            console.log('Certificate retrieved:', { firstSign, secondSign, timeStamp });
+            }
 
-            valResultDisplay.textContent = `Certificate Validated!
-            First Sign: ${firstSign}
-            Second Sign: ${secondSign}
-            Timestamp: ${new Date(timeStamp * 1000).toLocaleString()}`
+
         } catch (error) {
             console.error('Error retrieving certificate:', error.message);
             valResultDisplay.textContent = 'Validation failed: e-certificate not found!';
         }
 
     })}
+
+// ================= UTILITY FUNCTION ========================
 
 // Validation input is integer
 function validateIntegerInputs(inputs) {
@@ -411,5 +417,5 @@ function messageVeryfying(hash, sign, pubKey){
         result = 'message not valid'
     }
     console.log(result)
-    return result
+    return verified
 }
