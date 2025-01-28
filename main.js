@@ -1,7 +1,6 @@
 /*
 FEBRIAN NASHRULLAH
 febrian031318@gmail.com
-SHA3-256
 =====================================================
 */
 
@@ -263,23 +262,35 @@ if (pageId == "signing-page"){
 
         console.log("account: ", user.account)
         console.log(`e-certificate hash ${hash}\nSign ${sign}\nhashdtype: ${typeof hash}`)
-        console.log(``)
-
-        publicKeyDisplay.textContent = (`Public key: ${pubKey}`)
-        signResultDisplay.textContent = (`sign: ${sign}`)
 
         try {
-
             const receipt = await contract.methods
                 .addCertificate('0x' + hash, sign[0], sign[1])
-                .send({ from: user.account, gas: 300000 });  // account should be only owner, future change needed
+                .send({ from: user.account, gas: 300000 })  // account should be only owner, future change needed
+            const getEvents = receipt.events
 
-            console.log('Certificate added to blockchain:', receipt);
+            if (getEvents.UnauthorizedAccess){
+                console.log("Only OWNER can sign e-certificate!")
+                publicKeyDisplay.textContent = (`Only OWNER can sign e-certificate!`)
+                signResultDisplay.textContent = (``)
+            }else if (getEvents.HashExist) {
+                console.log("E-Certificate Already Exist! Will not store it on Blockchain. ")
+                publicKeyDisplay.textContent = (`E-Certificate Already Exist! Will not store it on Blockchain Please check on the 'Validation' page`)
+                signResultDisplay.textContent = (``)
+            } else {
+                console.log('Certificate added to blockchain:', receipt)
+                publicKeyDisplay.textContent = (`Public key: ${pubKey}`)
+                signResultDisplay.textContent = (`sign: ${sign}`)
+        
+            }
+
         } catch (error) {
             console.error('Error adding certificate:', error.message);
+
         }
 
-    })}
+    })
+}
 
 // ================= VALIDATION ===================
 
@@ -289,6 +300,39 @@ if (pageId == "validation-page"){
     const customFileBtn = document.getElementById("inputFileSign-btn");
     const fileNameDisplay = document.getElementById("file-name");
     const valResultDisplay = document.getElementById("validation-result");
+
+    console.log("home page")
+    async function valOwnerConfigure () {
+        if (!contract) {
+            console.log("Contract not initialized. Initializing now...")
+            await initializeContract();
+        }
+
+        try{
+
+            const signingNavbar = document.getElementById("li-sign-navbar")
+            // Request account access
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
+        
+            // Display the connected account
+            const account = accounts[0]
+        
+            // Detect ownership
+            const ownership = await ownerIdentificator(contract, account)
+        
+            if (ownership.isOwner){
+                signingNavbar.style.display = 'flex'
+                console.log("owner logged in, everything will be shown")
+            } else {
+                console.log("non owner, signing will not shown on navbar")
+            }
+
+        } catch (error) {
+            console.error("Error in homeOwnerConfigure:", error.message)
+        }
+    }
+    valOwnerConfigure()
+
 
     // Trigger file dialog on button click
     customFileBtn.addEventListener("click", () => {
@@ -356,7 +400,7 @@ if (pageId == "validation-page"){
                 Time Added: ${timeStampConvrtd}`
 
             } else {
-                valResultDisplay.textContent = "Validation failed: The sign doesn't match public key provided!"
+                valResultDisplay.textContent = "Validation failed: The sign does not match public key and/or file provided!"
 
             }
 
