@@ -204,7 +204,6 @@ if (pageId == "signing-page"){
         }
 
         return {ownership: ownership.isOwner, account : account}
-
     }
 
     // Trigger file dialog on button click
@@ -256,9 +255,19 @@ if (pageId == "signing-page"){
         }
 
         const fileContent = await fileToArrayBuffer(fileInput.files[0])
-        const privKey = BigInt(7)
-        const pubKey = generateKey(privKey, base_point, mod, curve[0])                               //TEMPORARY USE ONLY                         //TEMPORARY USE ONLY
-        const {hash, sign} = hashSigning(fileContent, privKey, pubKey)
+        let privKey =[document.getElementById("PrivKey")]
+
+        if(validateIntegerInputs(privKey) == false){
+            console.error("Only input integer into sign and public key!")
+            return
+        }
+
+        
+        privKey = privKey.map(input => BigInt(input.value))
+        console.log(typeof privKey[0])
+
+        const pubKey = generateKey(privKey[0], base_point, mod, curve[0])                               //TEMPORARY USE ONLY                         //TEMPORARY USE ONLY
+        const {hash, sign} = hashSigning(fileContent, privKey[0], pubKey)
 
         console.log("account: ", user.account)
         console.log(`e-certificate hash ${hash}\nSign ${sign}\nhashdtype: ${typeof hash}`)
@@ -301,7 +310,6 @@ if (pageId == "validation-page"){
     const fileNameDisplay = document.getElementById("file-name");
     const valResultDisplay = document.getElementById("validation-result");
 
-    console.log("home page")
     async function valOwnerConfigure () {
         if (!contract) {
             console.log("Contract not initialized. Initializing now...")
@@ -332,7 +340,6 @@ if (pageId == "validation-page"){
         }
     }
     valOwnerConfigure()
-
 
     // Trigger file dialog on button click
     customFileBtn.addEventListener("click", () => {
@@ -373,7 +380,7 @@ if (pageId == "validation-page"){
         }
 
         const fileContent = await fileToArrayBuffer(fileInput.files[0])
-        const hash = await findHash(fileContent)
+        const hash = findHash(fileContent)
 
         // Retirieve e-certificate
         try{
@@ -403,7 +410,6 @@ if (pageId == "validation-page"){
                 valResultDisplay.textContent = "Validation failed: The sign does not match public key and/or file provided!"
 
             }
-
 
         } catch (error) {
             console.error('Error retrieving certificate:', error.message);
