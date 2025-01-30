@@ -179,9 +179,9 @@ if (pageId == "home-page"){
 
 if (pageId == "signing-page"){
     // Get elements
-    const fileInput = document.getElementById("file-input-sign");
-    const customFileBtn = document.getElementById("inputFileSign-btn");
-    const fileNameDisplay = document.getElementById("file-name");
+    const fileInput = document.getElementById("file-input-sign")
+    const customFileBtn = document.getElementById("inputFileSign-btn")
+    const fileNameDisplay = document.getElementById("file-name")
     const publicKeyDisplay = document.getElementById("public-key")
     const signResultDisplay = document.getElementById("sign-result")
     const signingNavbar = document.getElementById("li-sign-navbar")
