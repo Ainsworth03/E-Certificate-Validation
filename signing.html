@@ -37,8 +37,8 @@
                     <label for="file-input">Upload E-Certificate (PDF):</label>
                     <input type="file" id="file-input-sign" accept=".pdf" required hidden/>
                     <span id="file-name">No file chosen</span>
-                    <label for="firstPubKey">Enter the signer private key:</label> 
-                    <input type="number" id="firstPrivKey" name="firstNumber" required>  
+                    <label for="PrivKey">Enter the signer private key:</label> 
+                    <input type="number" id="PrivKey" name="firstNumber" required>  
                     <button type="button" id="inputFileSign-btn">Choose File</button>
                     <button type="button" id="processSign-btn">Signing</button>
                     <p id="public-key"></p>
@@ -46,6 +46,7 @@
                     <button type="button" id="generateKey-btn">Generate Key</button>
                 </form>
                 <script src="https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/build/sha3.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
                 <script src="./ECDSA.js"></script>
                 <script src="./HashSHA3.js"></script>
                 <script src="./main.js"></script>

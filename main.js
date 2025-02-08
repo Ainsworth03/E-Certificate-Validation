@@ -88,8 +88,6 @@ initializeContract()
 
 // =========== Execution ============================
 const pageId = document.body.id
-
-
 // ============ LOGIN ================================
 
 if (pageId == "login-page"){
@@ -257,17 +255,18 @@ if (pageId == "signing-page"){
         const fileContent = await fileToArrayBuffer(fileInput.files[0])
         let privKey =[document.getElementById("PrivKey")]
 
+        //console.log(`File Content: ${fileContent}`)
+
         if(validateIntegerInputs(privKey) == false){
             console.error("Only input integer into sign and public key!")
             return
         }
-
         
         privKey = privKey.map(input => BigInt(input.value))
         console.log(typeof privKey[0])
 
-        const pubKey = generateKey(privKey[0], base_point, mod, curve[0])                               //TEMPORARY USE ONLY                         //TEMPORARY USE ONLY
-        const {hash, sign} = hashSigning(fileContent, privKey[0], pubKey)
+        const pubKey = pubKeyGenerator(privKey[0])
+        const {hash, sign} = await hashSigning(fileContent, privKey[0], pubKey)
 
         console.log("account: ", user.account)
         console.log(`e-certificate hash ${hash}\nSign ${sign}\nhashdtype: ${typeof hash}`)
@@ -428,32 +427,54 @@ function validateIntegerInputs(inputs) {
     });
 }
 
-// File to array conversion
-function fileToArrayBuffer(file) {
+
+async function fileToArrayBuffer(file) {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+
     return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(new Uint8Array(reader.result))
-        reader.onerror = reject
-        reader.readAsArrayBuffer(file);
+        reader.onload = async () => {
+            const pdfData = new Uint8Array(reader.result);
+            const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+
+            let textContent = "";
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const text = await page.getTextContent();
+                textContent += text.items.map(item => item.str).join(" ");
+            }
+
+            resolve(textContent.trim());
+        };
+        reader.onerror = reject;
     });
 }
 
 // Setup the curve
-const mod = BigInt(17)
-const curve = [BigInt(2), BigInt(2)]
-const base_point = [BigInt(5), BigInt(1)]
-const order = BigInt(19)
+async function loadCurve() {
+    const response = await fetch('curve.json')
+    const curveData = await response.json()
+
+    // Convert values to BigInt
+    const mod = BigInt(curveData.mod)
+    const curve = curveData.curve.map(BigInt)
+    const base_point = curveData.base_point.map(BigInt)
+    const order = BigInt(curveData.order)
+
+    return {mod, curve, base_point, order}
+}
 
 // Signing
-function hashSigning(file, privKey, pubKey){
+async function hashSigning(file, privKey, pubKey){
     // Hashing:
     const hash = findHash(file)
     const hashtoBigInt = hashtoInt(hash) 
-    // Signing:
-    const randomNum = GenerateRandomNum(order)
-    //console.log(signerInfo)
-    const sign = signing(pointMulti, base_point, mod, curve[0], order, privKey, hashtoBigInt, randomNum)
-
+    // Curve Parameters
+    const {mod, curve, base_point, order} = await loadCurve()
+    console.log(`Curve Parameters: mod ${mod} modtype ${typeof mod}, curve: ${curve} curvetype ${typeof curve[0]}, base_point: ${base_point} basetype ${typeof base_point[0]}, order: ${order} ordertype ${typeof order}`)
+    
+    // Signing
+    const sign = signing(pointMulti, base_point, mod, curve[0], order, privKey, hashtoBigInt)
     console.log(`hash ${hash} \nHash big int: ${hashtoBigInt} \nSign ${sign} \npubKey ${pubKey}`)
     return { hash, sign }
 }
@@ -468,4 +489,16 @@ function messageVeryfying(hash, sign, pubKey){
     }
     console.log(result)
     return verified
+}
+
+async function pubKeyGenerator (privKey) {
+
+    // Curve Parameters
+    const {mod, curve, base_point, order} = await loadCurve()
+    console.log(`Curve Parameters: mod ${mod} modtype ${typeof mod}, curve: ${curve} curvetype ${typeof curve[0]}, base_point: ${base_point} basetype ${typeof base_point[0]}, order: ${order} ordertype ${typeof order}`)
+
+    console.log(`PrivKey Type: ${typeof privKey}`)
+    const pubKey = generateKey(privKey, base_point, mod, curve[0]) 
+    return pubKey
+
 }

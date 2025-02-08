@@ -120,13 +120,20 @@ const generateKey = (privKey, base_point, p, a) => {
  * @param {number} k - selected k value for signing
  * @returns {number[]} [R,S] indicates ECDSA's signed message
  */
-const signing = (pointMulti, base_point, p, a, order, privKey, message, k) => {
-    //const pubKey = pointMulti(pointAdd, base_point, p, a, privKey)
-    const k_times_base = pointMulti(pointAdd, base_point, p, a, k)
-    const random_num_inverse = findInverse(k, order)
-    const r = BigInt(k_times_base[0] % order)
-    const sign_message = (random_num_inverse * (message + privKey * r)) % order
-    //console.log(privKey * r)
+const signing = (pointMulti, base_point, p, a, order, privKey, message) => {
+    let r = BigInt(0) 
+    let sign_message = BigInt(0)
+    let random_num_inverse
+    while (r == BigInt(0) || sign_message == BigInt(0)){
+        let k = GenerateRandomNum(order)
+        //const pubKey = pointMulti(pointAdd, base_point, p, a, privKey)
+        const k_times_base = pointMulti(pointAdd, base_point, p, a, k)
+        random_num_inverse = findInverse(k, order)
+        r = BigInt(k_times_base[0] % order)
+        sign_message = (random_num_inverse * (message + privKey * r)) % order
+        //console.log(privKey * r)
+    }
+
     return Object.freeze([r, sign_message])
 
 }
