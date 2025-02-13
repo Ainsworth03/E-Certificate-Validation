@@ -265,7 +265,7 @@ if (pageId == "signing-page"){
         privKey = privKey.map(input => BigInt(input.value))
         console.log(typeof privKey[0])
 
-        const pubKey = pubKeyGenerator(privKey[0])
+        const pubKey = await pubKeyGenerator(privKey[0])
         const {hash, sign} = await hashSigning(fileContent, privKey[0], pubKey)
 
         console.log("account: ", user.account)
@@ -479,9 +479,16 @@ async function hashSigning(file, privKey, pubKey){
     return { hash, sign }
 }
 
-function messageVeryfying(hash, sign, pubKey){
+async function messageVeryfying(hash, sign, pubKey){
     const hashtoBigInt = hashtoInt(hash)
+
+    // Curve Parameters
+    const {mod, curve, base_point, order} = await loadCurve()
+    console.log(`Curve Parameters: mod ${mod} modtype ${typeof mod}, curve: ${curve} curvetype ${typeof curve[0]}, base_point: ${base_point} basetype ${typeof base_point[0]}, order: ${order} ordertype ${typeof order}`)
+
+    // Verifying Signature
     const verified = verifying(pointMulti, base_point, order, pubKey, sign, hashtoBigInt, mod, curve[0])
+
     if (verified == true){
         result = 'message validated!'
     }else{
@@ -499,6 +506,7 @@ async function pubKeyGenerator (privKey) {
 
     console.log(`PrivKey Type: ${typeof privKey}`)
     const pubKey = generateKey(privKey, base_point, mod, curve[0]) 
+    console.log(`Pubkey from generator ${pubKey}`)
     return pubKey
 
 }
