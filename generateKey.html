@@ -3,29 +3,27 @@
         <title>e-certificate validation</title>
         <link rel = "stylesheet" href="style.css" />
     </head>
-    <body id = "home-page">
+    <body id = "generate-key-page">
         <div class="body-container">
             <!-- NAVIGATION BAR -->
             <div class = "navbar-container">
                 <ul class = "ul-navbar">
-                    <li class = li-navbar>
-                        <a class = "a-navbar" href = "home.html">Home</a>
-                    </li>
-                    <li  id="li-sign-navbar" class = li-sign-navbar >
-                        <a class = "a-navbar" href = "signing.html">Signing</a>
-                    </li>
-                    <li class = li-navbar>
-                        <a class = "a-navbar" href = "Validation.html">Validation</a>
-                    </li>
                 </ul>
             </div>
             <!-- NAVIGATION BAR END -->
 
             <!-- CONTENT 1 -->
-            <div class = "content-container">
-                <h1>Welcome to E-Certificate Validaton</h1>
-                </button>
-                
+            <div class = "generate-key-container">
+                <h1>Welcome to E-Certificate Validation</h1>
+                <h2>Key Generator</h2>
+                <br>
+                <span class = "key-generator" id="private-key-generate">Private Key: </span>
+                <span class = "key-generator" id="public-key-generate">Public Key: </span>
+                <br>
+                <button type="button" id="generateKey-btn">Generate Key</button>
+                <br>
+                <button type="button" id="back-btn">
+                    <a class = back href = "signing.html">Back to signing</a>
             </div>
             <!-- COONTENT 1 END -->
             
@@ -36,5 +34,6 @@
             <!-- FOOTER END -->
         </div>
         <script src="main.js"></script>
+        <script src="ECDSA.js"></script>
     </body>
 </html>

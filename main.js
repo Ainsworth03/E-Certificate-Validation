@@ -81,10 +81,7 @@ async function ownerIdentificator(contract, account){
 
 }
 
-
 initializeContract()
-
-
 
 // =========== Execution ============================
 const pageId = document.body.id
@@ -171,6 +168,22 @@ if (pageId == "home-page"){
         }
     }
     homeOwnerConfigure()
+}
+
+// ============= Generate Key ======================
+if (pageId == "generate-key-page"){
+    // Get elements
+    const generateKeyBtn = document.getElementById("generateKey-btn")
+    const privKeyDisplay = document.getElementById("private-key-generate")
+    const pubKeyDisplay = document.getElementById("public-key-generate")
+
+    generateKeyBtn.addEventListener("click", async () => {
+        privKeyGenerated = await privKeyGenerator()
+        pubKeyGenerated = await pubKeyGenerator(privKeyGenerated)
+        
+        privKeyDisplay.textContent = `Private Key: ${privKeyGenerated}`
+        pubKeyDisplay.textContent = `Public Key: ${pubKeyGenerated}`
+    })
 }
 
 // ================ SIGNING ========================
@@ -498,6 +511,15 @@ async function messageVeryfying(hash, sign, pubKey){
     return verified
 }
 
+async function privKeyGenerator () {
+    // Curve Parameters
+    const {mod, curve, base_point, order} = await loadCurve()
+    console.log(`Curve Parameters: mod ${mod} modtype ${typeof mod}, curve: ${curve} curvetype ${typeof curve[0]}, base_point: ${base_point} basetype ${typeof base_point[0]}, order: ${order} ordertype ${typeof order}`)
+
+    const privateKey = generatePrivKey(order)
+
+    return privateKey
+}
 async function pubKeyGenerator (privKey) {
 
     // Curve Parameters

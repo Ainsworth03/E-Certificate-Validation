@@ -98,6 +98,19 @@ const pointMulti = (pointAdd, point_1, p, a, scalar) => {
 
 /**
  * 
+ * @param {number} order - order of the curve 
+ * @returns {number} private key
+ */
+const generatePrivKey = (order) => {
+    privKey = BigInt(0)
+    while (privKey < BigInt(1)){
+        privKey = BigInt(Math.floor((Math.random()) * Number(order))) - BigInt(1)
+    }
+    return privKey
+}
+
+/**
+ * 
  * @param {number} privKey - signer's private key  
  * @param {number[]} base_point - the choosen base point G over the curve
  * @param {number} p - the modulo (divisor)
