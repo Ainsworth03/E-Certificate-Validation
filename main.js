@@ -48,7 +48,6 @@ const initContract = async () => {
 }
 
 async function initializeContract () {
-
     try {
         // Initialize the contract
         if (!contract) {
@@ -58,8 +57,6 @@ async function initializeContract () {
     }catch (error) {
         console.log("Error initializing contract: ", contract)
     }
-
-
 }
 
 async function ownerIdentificator(contract, account){
@@ -176,6 +173,7 @@ if (pageId == "generate-key-page"){
     const generateKeyBtn = document.getElementById("generateKey-btn")
     const privKeyDisplay = document.getElementById("private-key-generate")
     const pubKeyDisplay = document.getElementById("public-key-generate")
+    const backButton = document.getElementById("back-btn")
 
     generateKeyBtn.addEventListener("click", async () => {
         privKeyGenerated = await privKeyGenerator()
@@ -183,6 +181,10 @@ if (pageId == "generate-key-page"){
         
         privKeyDisplay.textContent = `Private Key: ${privKeyGenerated}`
         pubKeyDisplay.textContent = `Public Key: ${pubKeyGenerated}`
+    })
+
+    backButton.addEventListener("click", () => {
+        window.location.href = "signing.html"
     })
 }
 
@@ -196,9 +198,16 @@ if (pageId == "signing-page"){
     const publicKeyDisplay = document.getElementById("public-key")
     const signResultDisplay = document.getElementById("sign-result")
     const signingNavbar = document.getElementById("li-sign-navbar")
+    const generateKeyBtn = document.getElementById("generateKey-btn")
 
     signingNavbar.style.display = 'flex'
 
+    // Generate Key Button Action
+    generateKeyBtn.addEventListener("click", () => {
+        window.location.href = "generateKey.html"
+    })
+
+    // Get the owner
     async function getOwner () {
 
         // Request account access
@@ -235,10 +244,11 @@ if (pageId == "signing-page"){
         if (fileInput.files.length > 0) {
             fileNameDisplay.textContent = fileInput.files[0].name; // Display selected file name
         } else {
-            fileNameDisplay.textContent = "No file chosen";
+            fileNameDisplay.textContent = "No file chosen"
         }
     });
 
+    // Process Sign
     document.getElementById("processSign-btn").addEventListener("click", async() =>{
         // run getOwner
         const user = await getOwner()
@@ -248,6 +258,7 @@ if (pageId == "signing-page"){
             window.location.href = "login.html"                             
         }
 
+        // Showing error if no file selected
         if(!fileInput.files.length){
             console.error("No file selected!")
 
@@ -265,6 +276,7 @@ if (pageId == "signing-page"){
             return
         }
 
+        // Extract the file content
         const fileContent = await fileToArrayBuffer(fileInput.files[0])
         let privKey =[document.getElementById("PrivKey")]
 
@@ -408,8 +420,10 @@ if (pageId == "validation-page"){
             pubKeyInput = pubKeyInput.map(input => BigInt(input.value, 10))
             signInput = [firstSign, secondSign]
 
-            const verifyingResult = messageVeryfying(hash, signInput, pubKeyInput)
-            if (verifyingResult) {
+            const verifyingResult = await messageVeryfying(hash, signInput, pubKeyInput)
+
+            console.log(`Verifying Result: ${verifyingResult}`)
+            if (verifyingResult == true) {
 
                 console.log(`e-certificate hash ${hash}\nVerifying result: ${verifyingResult}`)
 
@@ -440,7 +454,6 @@ function validateIntegerInputs(inputs) {
     });
 }
 
-
 async function fileToArrayBuffer(file) {
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
@@ -464,6 +477,11 @@ async function fileToArrayBuffer(file) {
 }
 
 // Setup the curve
+
+/**
+ * 
+ * @returns {list}
+ */
 async function loadCurve() {
     const response = await fetch('curve.json')
     const curveData = await response.json()
@@ -476,6 +494,14 @@ async function loadCurve() {
 
     return {mod, curve, base_point, order}
 }
+
+/**
+ * 
+ * @param {.pdf} file 
+ * @param {integer} privKey 
+ * @param {integer[]} pubKey 
+ * @returns 
+ */
 
 // Signing
 async function hashSigning(file, privKey, pubKey){
@@ -520,6 +546,7 @@ async function privKeyGenerator () {
 
     return privateKey
 }
+
 async function pubKeyGenerator (privKey) {
 
     // Curve Parameters

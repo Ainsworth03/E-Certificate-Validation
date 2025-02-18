@@ -1,8 +1,8 @@
 {
     "__comment": "This is the curve parameters for ECDSA (simpler used)",
-    "mod": "17",
-    "curve": ["2", "2"],
-    "base_point": ["5", "1"],
-    "order": "19"
+    "mod": "114973",
+    "curve": ["-3", "69424"],
+    "base_point": ["11570","42257"],
+    "order": "114467"
 }
   
