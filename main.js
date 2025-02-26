@@ -314,9 +314,8 @@ if (pageId == "signing-page"){
                 console.log('Certificate added to blockchain:', receipt)
                 publicKeyDisplay.textContent = (`Public key: ${pubKey}`)
                 signResultDisplay.textContent = (`sign: ${sign}`)
-        
             }
-
+            
         } catch (error) {
             console.error('Error adding certificate:', error.message);
 

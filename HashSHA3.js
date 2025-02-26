@@ -5,6 +5,7 @@ SHA3-256
 =====================================================
 */
 
+
 //curve: x^3 + ax + b mod r
 /**
  * 
@@ -12,7 +13,7 @@ SHA3-256
  * @returns {string} - hash Keccak-256 result
  */
 const findHash = (message) => {
-    const hash_result = sha3_256(message)
+    const hash_result = keccak_256(message)
     return hash_result
 }
 
