@@ -23,7 +23,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
 }
 
 #back-btn {
@@ -172,6 +172,11 @@ body{
     height: 80vh;
 }
 
+.logo-upi-header{
+    position: fixed;
+    top: 10;
+    right: 10;
+}
 
 #file-form {
     display: flex;
@@ -300,6 +305,12 @@ h1 {
     font-size: 20px;
     color: beige;
 
+}
+
+.logo-upi {
+    position: fixed;
+    bottom: 10;
+    left: 0;
 }
 
 .modal {

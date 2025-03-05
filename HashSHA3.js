@@ -1,7 +1,7 @@
 /*
 FEBRIAN NASHRULLAH
 2100830
-SHA3-256
+Keccak-256
 =====================================================
 */
 
@@ -19,10 +19,11 @@ const findHash = (message) => {
 
 /**
  * 
- * @param {byte256} hash - hash value (preffered Keccak-256)
+ * @param {byte256} hash - hash value (Keccak-256)
  * @returns {BigInt} converted hash value into BigInt
  */
 const hashtoInt = (hash) => {
     const hash_int = BigInt("0x" + hash)
     return hash_int 
 }
+

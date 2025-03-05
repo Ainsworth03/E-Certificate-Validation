@@ -163,7 +163,7 @@ const signing = (pointMulti, base_point, p, a, order, privKey, message) => {
  * @param {Number} a - the a value of curve y^2 = x^3 + ax + b
  * @returns {boolean} returns true if the message valid, and false if message invalid
  */
-const verifying = (pointMulti, base_point, order, pubKey, signed, message, p, a) => {
+const validation = (pointMulti, base_point, order, pubKey, signed, message, p, a) => {
     const s_inverse = findInverse(signed[1], order)
     const u_1 = (s_inverse * message) % order
     const u_2 = (s_inverse * signed[0]) % order

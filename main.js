@@ -525,7 +525,7 @@ async function messageVeryfying(hash, sign, pubKey){
     console.log(`Curve Parameters: mod ${mod} modtype ${typeof mod}, curve: ${curve} curvetype ${typeof curve[0]}, base_point: ${base_point} basetype ${typeof base_point[0]}, order: ${order} ordertype ${typeof order}`)
 
     // Verifying Signature
-    const verified = verifying(pointMulti, base_point, order, pubKey, sign, hashtoBigInt, mod, curve[0])
+    const verified = validation(pointMulti, base_point, order, pubKey, sign, hashtoBigInt, mod, curve[0])
 
     if (verified == true){
         result = 'message validated!'

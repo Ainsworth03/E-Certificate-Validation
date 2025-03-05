@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+// FEBRIAN NASHRULLAH
+// 2100830
+// SMART CONTRACT SOLIDITY
+
 contract certificateValidation{
 
     address private owner ;
@@ -63,3 +67,4 @@ contract certificateValidation{
         return msg.sender == owner;
     }
 }
+
